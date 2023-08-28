@@ -8,13 +8,16 @@ import pandas as pd
 import argparse
 import os
 
-# parser = argparse.ArgumentParser(description='argparse testing')
-# parser.add_argument('--dataset', '-d', type=str, default="sample", required=True, help="Dataset folder name")
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description='argparse testing')
+parser.add_argument('--dataset', '-d', type=str, default="sample", required=True, help="dataset folder name")
+parser.add_argument('--iter', '-i', type=int, default=20, required=True, help="max iterations")
+args = parser.parse_args()
 
-# dataset = args.dataset
-dataset = "sample"
-iter = 
+dataset = args.dataset
+iter = args.iter
+
+# dataset = "sample"
+# iter = 5
 
 print(dataset)
 
@@ -35,4 +38,9 @@ ttpm.learn(X)
 # ret_metrix = MetricsDAG(ttpm.causal_matrix, true_causal_matrix)
 # print(ret_metrix.metrics)
 os.makedirs("./submission/ttpm_{}_iter".format(str(iter)), exist_ok=True)
-np.save("./submission/ttpm_{}_iter/{}_graph_matrix.npy".format(str(iter),dataset), ttpm.causal_matrix.to_numpy())
+try:
+    np.save("./submission/ttpm_{}_iter/{}_graph_matrix.npy".format(str(iter),dataset), ttpm.causal_matrix)
+    print("1")
+except:
+    np.save("./submission/ttpm_{}_iter/{}_graph_matrix.npy".format(str(iter),dataset), ttpm.causal_matrix.to_numpy())
+    print("2")
